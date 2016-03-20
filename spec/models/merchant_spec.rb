@@ -11,4 +11,6 @@ RSpec.describe Merchant, type: :model do
   it { should validate_presence_of :name }
   it { should validate_presence_of :domain }
   
+  it { should have_many(:transactions) }
+  
 end
