@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     
     scope module: :v1 do
       
-      resources :consumers, :only => [:show]
+      resources :consumers, :only => [:index, :show]
       
     end
   end

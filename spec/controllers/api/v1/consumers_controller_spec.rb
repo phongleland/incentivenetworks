@@ -19,4 +19,19 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
 
     it { should respond_with 200 }
   end
+  
+  describe "GET #index" do
+    before(:each) do
+      4.times { FactoryGirl.create :consumer }
+      get :index
+    end
+
+    it "returns 4 records from the database" do
+      consumers_response = JSON.parse(response.body, symbolize_names: true)
+      expect(consumers_response).to have(4).items
+    end
+
+    it { should respond_with 200 }
+  end
+  
 end
