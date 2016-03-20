@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320204134) do
+ActiveRecord::Schema.define(version: 20160320205617) do
 
   create_table "consumers", force: :cascade do |t|
     t.string   "firstname"
@@ -26,5 +26,17 @@ ActiveRecord::Schema.define(version: 20160320204134) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "transactions", force: :cascade do |t|
+    t.date     "sale_date"
+    t.decimal  "sale_amount"
+    t.integer  "consumer_id"
+    t.integer  "merchant_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "transactions", ["consumer_id"], name: "index_transactions_on_consumer_id"
+  add_index "transactions", ["merchant_id"], name: "index_transactions_on_merchant_id"
 
 end
