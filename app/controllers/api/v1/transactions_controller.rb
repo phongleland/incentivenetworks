@@ -27,6 +27,12 @@ class Api::V1::TransactionsController < ApplicationController
     end
   end
   
+  def destroy
+    transaction = find_transaction
+    transaction.destroy
+    head 204
+  end
+  
   private
     
     def find_transaction

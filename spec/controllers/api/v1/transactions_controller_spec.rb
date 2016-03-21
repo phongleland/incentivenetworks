@@ -111,4 +111,12 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
     end
   end
   
+  describe "DELETE #destroy" do
+    before(:each) do
+      @transaction = FactoryGirl.create :transaction
+      delete :destroy, { id: @transaction.id }
+    end
+
+    it { should respond_with 204 }
+  end
 end
