@@ -6,7 +6,7 @@ class Api::V1::ConsumersController < ApplicationController
   end
     
   def show
-    respond_with Consumer.find(params[:id])
+    respond_with find_consumer
   end
   
   def create
@@ -19,7 +19,7 @@ class Api::V1::ConsumersController < ApplicationController
   end
   
   def update
-    consumer = Consumer.find(params[:id])
+    consumer = find_consumer
     if consumer.update(consumer_params)
       render json: consumer, status: 200, location: [:api, consumer]
     else
@@ -28,13 +28,17 @@ class Api::V1::ConsumersController < ApplicationController
   end
   
   def destroy
-    product = Consumer.find(params[:id])
-    product.destroy
+    consumer = find_consumer
+    consumer.destroy
     head 204
   end
 
   private
-
+    
+    def find_consumer
+      Consumer.find(params[:id])
+    end
+    
     def consumer_params
       params.require(:consumer).permit(:lastname, :firstname)
     end

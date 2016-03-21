@@ -13,8 +13,7 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
     end
 
     it "returns the information about a consumer" do
-      consumer_response = JSON.parse(response.body, symbolize_names: true)
-      expect(consumer_response[:firstname]).to eql @consumer.firstname
+      expect(json_response[:firstname]).to eql @consumer.firstname
     end
 
     it { should respond_with 200 }
@@ -27,8 +26,7 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
     end
 
     it "returns 4 records from the database" do
-      consumers_response = JSON.parse(response.body, symbolize_names: true)
-      expect(consumers_response).to have(4).items
+      expect(json_response).to have(4).items
     end
 
     it { should respond_with 200 }
@@ -42,8 +40,7 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
       end
 
       it "renders the json representation" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response[:firstname]).to eql @valid_attributes[:firstname]
+        expect(json_response[:firstname]).to eql @valid_attributes[:firstname]
       end
 
       it { should respond_with 201 }
@@ -56,13 +53,11 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
       end
 
       it "renders the json errors" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response).to have_key(:errors)
+        expect(json_response).to have_key(:errors)
       end
 
       it "renders the json errors on why the consumer could not be created" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response[:errors][:lastname]).to include "can't be blank"
+        expect(json_response[:errors][:lastname]).to include "can't be blank"
       end
 
       it { should respond_with 422 }
@@ -83,8 +78,7 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
       end
 
       it "renders the json representation for the updated user" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response[:lastname]).to eql lastname
+        expect(json_response[:lastname]).to eql lastname
       end
 
       it { should respond_with 200 }
@@ -97,13 +91,11 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
       end
 
       it "renders an errors json" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response).to have_key(:errors)
+        expect(json_response).to have_key(:errors)
       end
 
       it "renders the json errors on whye the user could not be created" do
-        consumer_response = JSON.parse(response.body, symbolize_names: true)
-        expect(consumer_response[:errors][:lastname]).to include "can't be blank"
+        expect(json_response[:errors][:lastname]).to include "can't be blank"
       end
 
       it { should respond_with 422 }
