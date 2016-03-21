@@ -5,6 +5,8 @@ class Transaction < ActiveRecord::Base
                       
   belongs_to :consumer
   belongs_to :merchant
+  validates :consumer, :presence => true
+  validates :merchant, :presence => true
   
   scope :filter_by_merchant, lambda { |merchant_id|
     where("merchant_id = ?", merchant_id ) 
