@@ -18,6 +18,15 @@ class Api::V1::TransactionsController < ApplicationController
     end
   end
   
+  def update
+    transaction = find_transaction
+    if transaction.update(transaction_params)
+      render json: transaction, status: 200, location: [:api, transaction]
+    else
+      render json: { errors: transaction.errors }, status: 422
+    end
+  end
+  
   private
     
     def find_transaction

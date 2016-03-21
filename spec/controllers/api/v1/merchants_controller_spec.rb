@@ -77,7 +77,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
               merchant: { name: name } }
       end
 
-      it "renders the json representation for the updated user" do
+      it "renders the json representation for the updated merchant" do
         expect(json_response[:name]).to eql name
       end
 
