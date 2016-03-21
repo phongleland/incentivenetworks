@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       
       resources :consumers, :only => [:index, :show, :create, :update, :destroy ]
       resources :merchants, :only => [:index, :show, :create, :update, :destroy ]
+      resources :transactions, :only => [:show]
     end
   end
   
