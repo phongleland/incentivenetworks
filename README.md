@@ -5,7 +5,11 @@ incentivemerchant is a RESTful API solution to get all transaction for a specifi
 Install
 --------
 
-Download and run `rake db:migrate` from your shell.
+Download and run from your shell
+```shell
+bundle install
+rake db:migrate
+```
 
 To run tests
 ```shell
