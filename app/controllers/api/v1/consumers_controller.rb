@@ -17,6 +17,15 @@ class Api::V1::ConsumersController < ApplicationController
       render json: { errors: consumer.errors }, status: 422
     end
   end
+  
+  def update
+    consumer = Consumer.find(params[:id])
+    if consumer.update(consumer_params)
+      render json: consumer, status: 200, location: [:api, consumer]
+    else
+      render json: { errors: consumer.errors }, status: 422
+    end
+  end
 
   private
 
