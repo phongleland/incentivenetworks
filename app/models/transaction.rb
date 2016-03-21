@@ -14,7 +14,7 @@ class Transaction < ActiveRecord::Base
   }
   
   def self.search(params = {})
-
+    params = params.symbolize_keys
     return Transaction.none if (params.keys & [:transaction_ids, :merchant_id, :consumer_id]).empty?
     
     transactions = params[:transaction_ids].present? ? Transaction.find(params[:transaction_ids]) : Transaction.all

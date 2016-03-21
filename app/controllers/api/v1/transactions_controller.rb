@@ -2,7 +2,7 @@ class Api::V1::TransactionsController < ApplicationController
   respond_to :json
   
   def index
-    respond_with Transaction.all  
+    respond_with Transaction.search(params)
   end
   
   def show

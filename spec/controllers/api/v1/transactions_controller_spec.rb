@@ -21,12 +21,14 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
   
   describe "GET #index" do
     before(:each) do
-      10.times { FactoryGirl.create :transaction }
-      get :index
+      t1 = FactoryGirl.create :transaction
+      t2 = FactoryGirl.create :transaction
+      t3 = FactoryGirl.create :transaction
+      get :index, transaction_ids: [t1.id,t2.id,t3.id]
     end
 
-    it "returns 10 records from the database" do
-      expect(json_response).to have(10).items
+    it "returns 3 records from the database" do
+      expect(json_response).to have(3).items
     end
 
     it { should respond_with 200 }
@@ -35,7 +37,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
   describe "POST #create" do
     let (:consumer) { FactoryGirl.create :consumer }
     let (:merchant) { FactoryGirl.create :merchant }
-    
+
     context "when successful" do
       before(:each) do
         @valid_attributes = FactoryGirl.attributes_for :transaction
@@ -71,11 +73,11 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       it { should respond_with 422 }
     end
   end
-  
+
   describe "PUT/PATCH #update" do
 
     let (:sale_amount) { Faker::Commerce.price }
-  
+
     before(:each) do
       @transaction = FactoryGirl.create :transaction
     end
@@ -110,7 +112,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       it { should respond_with 422 }
     end
   end
-  
+
   describe "DELETE #destroy" do
     before(:each) do
       @transaction = FactoryGirl.create :transaction
