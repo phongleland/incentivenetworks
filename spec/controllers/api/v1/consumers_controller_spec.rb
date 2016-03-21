@@ -108,5 +108,15 @@ RSpec.describe Api::V1::ConsumersController, type: :controller do
 
       it { should respond_with 422 }
     end
+    
+    describe "DELETE #destroy" do
+      before(:each) do
+        @consumer = FactoryGirl.create :consumer
+        delete :destroy, { id: @consumer.id }
+      end
+
+      it { should respond_with 204 }
+    end
+    
   end
 end
