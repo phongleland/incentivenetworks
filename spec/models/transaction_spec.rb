@@ -85,4 +85,62 @@ RSpec.describe Transaction, type: :model do
     end
   end
   
+  describe ".search" do
+    let(:merchant1) { FactoryGirl.create :merchant }
+    let(:merchant2) { FactoryGirl.create :merchant }
+    let(:merchant3) { FactoryGirl.create :merchant }
+    let(:consumer1) { FactoryGirl.create :consumer }
+    let(:consumer2) { FactoryGirl.create :consumer }
+    let(:consumer3) { FactoryGirl.create :consumer }
+    
+    before(:each) do
+      @transaction1 = FactoryGirl.create :transaction, consumer_id: consumer1.id, merchant_id: merchant3.id
+      @transaction2 = FactoryGirl.create :transaction, consumer_id: consumer1.id, merchant_id: merchant2.id
+      @transaction3 = FactoryGirl.create :transaction, consumer_id: consumer2.id, merchant_id: merchant3.id
+      @transaction4 = FactoryGirl.create :transaction, consumer_id: consumer3.id, merchant_id: merchant1.id
+      @transaction5 = FactoryGirl.create :transaction, consumer_id: consumer1.id, merchant_id: merchant3.id
+    end
+    
+    context "when an empty hash is sent" do
+      it "returns an empty array" do
+        expect(Transaction.search({})).to be_empty
+      end
+    end
+
+    context "when merchant3" do
+      it "returns the matches" do
+        search_hash = { merchant_id: merchant3.id }
+        expect(Transaction.search(search_hash)).to match_array([@transaction1, @transaction3, @transaction5])
+      end
+    end
+    
+    context "when consumer1" do
+      it "returns the matches" do
+        search_hash = { consumer_id: consumer1.id }
+        expect(Transaction.search(search_hash)).to match_array([@transaction1, @transaction2, @transaction5])
+      end
+    end
+
+    context "when consumer1 and merchant3" do
+      it "returns the matches transaction1 and transaction5" do
+        search_hash = { consumer_id: consumer1.id, merchant_id: merchant3.id }
+        expect(Transaction.search(search_hash)).to match_array([@transaction1, @transaction5]) 
+      end
+    end
+
+    context "when consumer2 and merchant1" do
+      it "returns an empty array for no matches" do
+        search_hash = { consumer_id: consumer2.id, merchant_id: merchant1.id }
+        expect(Transaction.search(search_hash)).to be_empty
+      end
+    end
+    
+    context "when transaction_ids is present" do
+      it "returns the transactions from the ids" do
+        search_hash = { transaction_ids: [@transaction1.id, @transaction4.id]}
+        expect(Transaction.search(search_hash)).to match_array([@transaction1, @transaction4])
+      end
+    end
+  end
+  
 end
