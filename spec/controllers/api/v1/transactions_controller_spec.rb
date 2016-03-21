@@ -18,4 +18,18 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
 
     it { should respond_with 200 }
   end
+  
+  describe "GET #index" do
+    before(:each) do
+      10.times { FactoryGirl.create :transaction }
+      get :index
+    end
+
+    it "returns 10 records from the database" do
+      expect(json_response).to have(10).items
+    end
+
+    it { should respond_with 200 }
+  end
+  
 end
